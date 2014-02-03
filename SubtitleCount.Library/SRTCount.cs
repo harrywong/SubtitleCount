@@ -28,7 +28,7 @@ namespace SubtitleCount
                 }
                 if (textLine)
                 {
-                    string text = match.Value.Trim();
+                    string text = match.Value.Trim().Replace(" ", "").Replace("　", "");
                     int line = text.Length;
                     words += line;
                     lines++;

@@ -24,7 +24,7 @@ namespace SubtitleCount
             {
                 if (match.Groups["text"].Success)
                 {
-                    string text = match.Groups["text"].Value.Trim();
+                    string text = match.Groups["text"].Value.Trim().Replace(" ", "").Replace("　", "");
                     var tagRegexResult = Regex.Matches(text, TagPattern);
                     int line = text.Length - tagRegexResult.Cast<Match>().Sum(c => c.Value.Length);
                     words += line;
