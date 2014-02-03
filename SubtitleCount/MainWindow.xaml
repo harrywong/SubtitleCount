@@ -1,8 +1,42 @@
 ﻿<Window x:Class="SubtitleCount.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="SubtitleCount" Height="768" Width="1024"
+        DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+        >
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" ItemsSource="{Binding Subtitles}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" Background="White" GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="文件名" Width="200" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="类型" Width="60" Binding="{Binding Type}"></DataGridTextColumn>
+                <DataGridTextColumn Header="路径" Width="*" Binding="{Binding Path}"></DataGridTextColumn>
+                <DataGridTextColumn Header="行数" Width="60" Binding="{Binding Lines}"></DataGridTextColumn>
+                <DataGridTextColumn Header="字数" Width="60" Binding="{Binding Words}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Content="添加目录" Padding="10,5" Margin="5" Command="{Binding AddDirectoryCommand}"></Button>
+            <Button Content="添加文件" Padding="10,5" Margin="5" Command="{Binding AddFileCommand}"></Button>
+            <Button Content="清空" Padding="10,5" Margin="5" Command="{Binding ClearCommand}"></Button>
+            <Label Content="字幕类型：" VerticalContentAlignment="Center"></Label>
+            <ComboBox ItemsSource="{Binding Types}" DisplayMemberPath="Key" SelectedValuePath="Value" SelectedValue="{Binding SelectedParameter}" Margin="0,5" Width="100" VerticalContentAlignment="Center" SelectedIndex="0"></ComboBox>
+            <Label Content="D:" VerticalContentAlignment="Center"></Label>
+            <TextBox Margin="0,5" VerticalContentAlignment="Center" Width="50" Text="{Binding D}"></TextBox>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="统计" Padding="10,5" Margin="5" Command="{Binding CountCommand}"></Button>
+            <Button Content="输出" Padding="10,5" Margin="5" Command="{Binding OutputCommand}"></Button>
+        </StackPanel>
+        <StatusBar Grid.Row="3">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Status}"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

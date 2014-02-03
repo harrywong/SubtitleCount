@@ -1,0 +1,8 @@
+﻿<Window x:Class="SubtitleCount.OutputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OutputWindow" Height="768" Width="1024" FontFamily="SimSun">
+    <Grid>
+        <TextBox Name="Output" Margin="10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"></TextBox>
+    </Grid>
+</Window>
