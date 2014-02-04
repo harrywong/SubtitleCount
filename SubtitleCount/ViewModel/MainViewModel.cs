@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using Microshaoft.Text;
 using Microsoft.Practices.ServiceLocation;
 using Ookii.Dialogs.Wpf;
 using SubtitleCount.Models;
@@ -112,7 +113,10 @@ namespace SubtitleCount.ViewModel
                 if (subtitle.Words == 0 && subtitle.Lines == 0)
                 {
                     var count = ServiceLocator.Current.GetInstance<ISubtitleCount>(subtitle.Type);
-                    var result = count.Count(File.ReadAllText(subtitle.Path));
+                    var identify = new IdentifyEncoding();
+                    string encodingName = identify.GetEncodingName(new FileInfo(subtitle.Path));
+                    Encoding encoding = Encoding.GetEncoding(encodingName);
+                    var result = count.Count(File.ReadAllText(subtitle.Path, encoding));
                     subtitle.Words = result.Words;
                     subtitle.Lines = result.Lines;
                 }
@@ -137,14 +141,14 @@ namespace SubtitleCount.ViewModel
                 sum += itemSum;
 
                 builder.AppendFormat("{0} {1,-10} {2,-10} {3,-10} {4,-10} {5,-10}", PadRightEx(subtitle.Name, maxTitleLength),
-                    subtitle.Words.ToString("0"), (d * subtitle.Words * this._selectedParameter.A).ToString("0.0"), subtitle.Lines.ToString("0"),
-                    (d * subtitle.Lines * this._selectedParameter.B).ToString("0.0"),
-                    itemSum.ToString("0.0"));
+                    subtitle.Words.ToString("0"), (d * subtitle.Words * this._selectedParameter.A).ToString("0.000"), subtitle.Lines.ToString("0"),
+                    (d * subtitle.Lines * this._selectedParameter.B).ToString("0.000"),
+                    itemSum.ToString("0.000"));
                 builder.AppendLine();
             }
-            builder.AppendFormat("D   ：{0:0.0}", d);
+            builder.AppendFormat("D   ：{0}", d.ToString("0.000"));
             builder.AppendLine();
-            builder.AppendFormat("总计：{0:0.0}", sum);
+            builder.AppendFormat("总计：{0}", sum.ToString("0.000"));
             builder.AppendLine();
             builder.AppendLine("[/pre]");
 

@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ASSCount.cs" />
     <Compile Include="CountResult.cs" />
+    <Compile Include="IdentifyEncoding.cs" />
     <Compile Include="ISubtitleCount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SRTCount.cs" />
